@@ -1,0 +1,30 @@
+<div class="card">
+    <nav class="tabs">
+        <button class="tab tab-gran active" onclick="changeRoom('gran')">GRAN</button>
+        <button class="tab tab-lila" onclick="changeRoom('lila')">LILA</button>
+        <button class="tab tab-groga" onclick="changeRoom('groga')">GROGA</button>
+        <button class="tab tab-blava" onclick="changeRoom('blava')">BLAVA</button>
+    </nav>
+    
+    <div class="content">
+        <h2 id="room-title">Sala GRAN</h2>
+        
+        <div class="date-picker">
+            <label>Dia:</label>
+            <input type="date" id="booking-date" onchange="changeDate()">
+        </div>
+
+        <div class="reservation-form">
+            <input type="text" id="user-name" placeholder="Nom de qui reserva">
+            <input type="text" id="activity" placeholder="Activitat (Ex: Dansa, Ioga...)">
+            <div class="time-selects">
+                <select id="start-time"></select>
+                <span>fins a</span>
+                <select id="end-time"></select>
+            </div>
+            <button class="main-btn" onclick="makeBooking()">Confirmar Reserva</button>
+        </div>
+
+        <div id="schedule" class="schedule-grid"></div>
+    </div>
+</div>
