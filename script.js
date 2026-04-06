@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, doc, onSnapshot, setDoc, deleteField, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAeiD6TWv9XT0AuEUv7nhXeaLtEW88iIrw",
@@ -13,6 +13,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+// --- CONFIGURACIÓ DE SEGURETAT ---
+const CLAU_ADMIN = "1825";
+let isAdmin = false; 
 
 let currentRoom = 'gran';
 let currentData = {};
@@ -28,6 +32,18 @@ hours.forEach(h => {
   startS.innerHTML += `<option value="${h}">${h}</option>`;
   endS.innerHTML += `<option value="${h}">${h}</option>`;
 });
+
+// Funció per activar el mode "Admin"
+window.activaAdmin = () => {
+  const pass = prompt("Introdueix la clau per esborrar:");
+  if (pass === CLAU_ADMIN) {
+    isAdmin = true;
+    alert("Mode Admin activat. Ara pots veure les papereres.");
+    render();
+  } else {
+    alert("Clau incorrecta!");
+  }
+};
 
 window.changeRoom = (room) => {
   currentRoom = room;
@@ -58,7 +74,7 @@ function render() {
         <div class="busy-info" style="display: flex; align-items: center; width: 100%;">
           ${info.reserved ? 
             `<div><b>${info.name}</b> <br> <span class="activity-tag">${info.activity}</span></div>
-             <button class="admin-del" onclick="cancelBooking('${h}')">🗑️</button>` 
+             ${isAdmin ? `<button class="admin-del" onclick="cancelBooking('${h}')">🗑️</button>` : ''}` 
             : '<span class="free">Lliure</span>'}
         </div>
       </div>`;
@@ -69,26 +85,21 @@ window.makeBooking = async () => {
   const name = document.getElementById('user-name').value;
   const act = document.getElementById('activity').value;
   if (!name || !act) return alert("Falten dades!");
-  
   const range = hours.filter(h => h >= startS.value && h < endS.value);
-  if (range.length === 0) return alert("L'hora d'inici ha de ser abans que la de fi!");
+  if (range.length === 0) return alert("Error en les hores!");
   if (range.some(h => currentData[h]?.reserved)) return alert("Horari ocupat!");
-  
   const newData = { ...currentData };
   range.forEach(h => { newData[h] = { reserved: true, name, activity: act }; });
-  
   await setDoc(doc(db, "sales", `${currentRoom}_${dateInput.value}`), newData);
   alert("Reservat!");
-  document.getElementById('user-name').value = "";
-  document.getElementById('activity').value = "";
 };
 
 window.cancelBooking = async (hour) => {
-  if (!confirm(`Vols eliminar la reserva de les ${hour}?`)) return;
+  if (!isAdmin) return;
+  if (!confirm(`Vols eliminar la reserva?`)) return;
   const newData = { ...currentData };
   delete newData[hour]; 
   await setDoc(doc(db, "sales", `${currentRoom}_${dateInput.value}`), newData);
-  alert("Reserva eliminada!");
 };
 
 changeRoom('gran');
