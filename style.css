@@ -114,3 +114,21 @@ button#btn-reservar {
 }
 
 .free { color: #10b981; font-weight: 500; }
+
+/* BOTÓ D'ELIMINAR */
+.admin-del {
+  margin-left: auto;
+  background: #fee2e2;
+  border: none;
+  color: #ef4444;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.admin-del:hover {
+  background: #fecaca;
+  transform: scale(1.1);
+}
