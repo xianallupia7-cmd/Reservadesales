@@ -1,0 +1,31 @@
+:root {
+    --gran: #7f8c8d; --lila: #9b59b6; --groga: #f1c40f; --blava: #3498db;
+}
+body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 20px; }
+
+.card { background: white; width: 100%; max-width: 600px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; }
+
+.tabs { display: flex; background: #2c3e50; }
+.tab { flex: 1; border: none; padding: 15px 5px; color: white; cursor: pointer; font-weight: bold; opacity: 0.6; transition: 0.3s; }
+.tab.active { opacity: 1; border-bottom: 4px solid white; }
+.tab-gran { background: var(--gran); }
+.tab-lila { background: var(--lila); }
+.tab-groga { background: var(--groga); color: #333; }
+.tab-blava { background: var(--blava); }
+
+.content { padding: 20px; }
+.date-picker { margin-bottom: 15px; text-align: center; background: #f8f9fa; padding: 10px; border-radius: 8px; border: 1px solid #eee; }
+
+.reservation-form { background: #ffffff; padding: 15px; border-radius: 10px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; border: 1px solid #ddd; }
+.time-selects { display: flex; align-items: center; gap: 10px; justify-content: center; margin: 10px 0; }
+.main-btn { background: #2c3e50; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; }
+
+.slot { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid #eee; align-items: center; }
+.free { color: #2ecc71; font-weight: bold; }
+.busy { background: #fff5f5; border-radius: 8px; border-left: 5px solid #e74c3c; padding-left: 10px; }
+
+.busy-info { display: flex; flex-direction: column; text-align: right; align-items: flex-end; }
+.activity-tag { font-size: 0.8rem; color: #666; font-style: italic; }
+
+.admin-del { background: #ff4757; color: white; border: none; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 5px; }
+.cancel-text { font-size: 0.65rem; color: #999; margin-top: 2px; display: block; }
